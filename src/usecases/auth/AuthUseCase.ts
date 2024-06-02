@@ -4,7 +4,7 @@ import { inject, injectable } from 'tsyringe';
 import { LoginUserDto } from '../../dtos/auth/loginUser.dto';
 import { IAuth } from '../../interfaces/IAuth';
 import { IJwtPayload } from '../../interfaces/IJwtPayload';
-import type { IUserRepository } from '../../repositories/IUserRepository';
+import type { IUserRepository } from '../../repositories/user/IUserRepository';
 import { IAuthUseCase } from './IAuthUseCase';
 
 @injectable()

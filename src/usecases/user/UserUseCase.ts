@@ -3,7 +3,7 @@ import { inject, injectable } from 'tsyringe';
 import type { CreateUserDto } from '../../dtos/user/createUser.dto';
 import { FindUserDto } from '../../dtos/user/findUser.dto';
 import { IUser } from '../../interfaces/IUser';
-import type { IUserRepository } from '../../repositories/IUserRepository';
+import type { IUserRepository } from '../../repositories/user/IUserRepository';
 import { SALT_ROUNDS } from '../constants';
 import type { IUserUseCase } from './IUserUseCase';
 

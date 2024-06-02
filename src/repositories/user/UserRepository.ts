@@ -1,7 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { User } from '@prisma/client';
-import { prisma } from '../lib/prisma';
+import { prisma } from '../../lib/prisma';
 import { FindUserRepository, ICreateUserRepository, IUserRepository } from './IUserRepository';
 
 @injectable()

@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-import { IUserRepository } from './repositories/IUserRepository';
-import { UserRepository } from './repositories/UserRepository';
+import { IUserRepository } from './repositories/user/IUserRepository';
+import { UserRepository } from './repositories/user/UserRepository';
 import { AuthUseCase } from './usecases/auth/AuthUseCase';
 import { IAuthUseCase } from './usecases/auth/IAuthUseCase';
 import { IUserUseCase } from './usecases/user/IUserUseCase';
