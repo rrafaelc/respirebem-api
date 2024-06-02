@@ -1,5 +1,6 @@
-import { UserCreateDto } from '../dtos/UserCreate.dto';
+import { CreateUserDto } from '../dtos/createUser.dto';
+import { IUser } from '../interfaces/IUser';
 
 export interface IUserUseCase {
-  create(request: UserCreateDto): Promise<void>;
+  create(request: CreateUserDto): Promise<IUser>;
 }
