@@ -1,12 +1,9 @@
-import { FastifyPluginAsync } from 'fastify'
-import { prisma } from '../lib/prisma';
+import { FastifyPluginAsync } from 'fastify';
 
 const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-  const user = await prisma.user.findMany();
-
-  fastify.get('/api', async function (request, reply) {
-    return { root: true, user }
-  })
-}
+  fastify.get('/', async function (request, reply) {
+    return { root: true };
+  });
+};
 
 export default root;
