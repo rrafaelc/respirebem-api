@@ -1,0 +1,6 @@
+* text=auto
+
+.husky/* text eol=lf
+prisma/* text eol=lf
+
+src/** text eol=crlf
