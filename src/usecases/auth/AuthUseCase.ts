@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 import { LoginUserDto } from '../../dtos/auth/loginUser.dto';
 import { IAuth } from '../../interfaces/IAuth';
+import { IJwtPayload } from '../../interfaces/IJwtPayload';
 import type { IUserRepository } from '../../repositories/IUserRepository';
 import { IAuthUseCase } from './IAuthUseCase';
 
@@ -13,11 +15,23 @@ export class AuthUseCase implements IAuthUseCase {
     try {
       const user = await this.userRepository.findByEmail({ email });
 
-      if (!user) throw new Error('Email or password are incorrect');
+      if (!user) throw new Error('Email or password is incorrect');
 
       const match = await bcrypt.compare(password, user.password);
 
-      if (!match) throw new Error('Email or password are incorrect');
+      if (!match) throw new Error('Email or password is incorrect');
+
+      const token = jwt.sign(
+        {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        } as IJwtPayload,
+        process.env.JWT_SECRET ?? '',
+        {
+          expiresIn: '1d',
+        },
+      );
 
       return {
         user: {
@@ -28,7 +42,7 @@ export class AuthUseCase implements IAuthUseCase {
           updatedAt: user.updatedAt,
           isActive: user.isActive,
         },
-        access_token: '',
+        access_token: token,
       };
     } catch (error: any) {
       throw new Error(error.message);

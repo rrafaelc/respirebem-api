@@ -14,9 +14,9 @@ export class UserController {
     try {
       throw new Error('Endpoint not available, maybe will be used in auth register');
       const user = await this.userUseCase.create(body);
-      reply.status(201).send({ user });
+      reply.code(201).send({ user });
     } catch (error: any) {
-      reply.status(400).send({ error: error.message });
+      reply.code(400).send({ error: error.message });
     }
   }
 
@@ -25,9 +25,9 @@ export class UserController {
 
     try {
       const user = await this.userUseCase.find(params);
-      reply.status(200).send({ user });
+      reply.code(200).send({ user });
     } catch (error: any) {
-      reply.status(400).send({ error: error.message });
+      reply.code(400).send({ error: error.message });
     }
   }
 }

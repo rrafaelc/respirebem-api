@@ -8,13 +8,15 @@ export class AuthController {
   constructor(@inject('IAuthUseCase') private authUseCase: IAuthUseCase) {}
 
   async login(request: FastifyRequest, reply: FastifyReply) {
-    const body = request.body as LoginUserDto;
-
     try {
-      const user = await this.authUseCase.login(body);
-      reply.status(200).send(user);
+      const { email, password } = request.body as LoginUserDto;
+
+      if (!email || !password) throw new Error('email and password are required in body');
+
+      const user = await this.authUseCase.login({ email, password });
+      reply.code(200).send(user);
     } catch (error: any) {
-      reply.status(400).send({ error: error.message });
+      reply.code(400).send({ error: error.message });
     }
   }
 }
