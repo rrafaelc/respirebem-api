@@ -21,13 +21,16 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   isActive  Boolean  @default(true)
+  Sensor    Sensor[]
 }
 
 model Sensor {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name      String?
+  name      String
   model     String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   isActive  Boolean  @default(true)
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
 }
