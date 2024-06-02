@@ -1,7 +1,3 @@
-export interface ISensor {
-  id: string;
-  name: string;
-  model: string;
-  isActive: boolean;
-  userId: string;
-}
+import { Sensor } from '@prisma/client';
+
+export type ISensor = Sensor;

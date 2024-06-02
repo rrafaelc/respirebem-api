@@ -1,13 +1,14 @@
 import { injectable } from 'tsyringe';
 
-import { CreateUserDto } from '../dtos/createUser.dto';
-import { IUser } from '../interfaces/IUser';
+import { User } from '@prisma/client';
 import { prisma } from '../lib/prisma';
-import { IUserRepository } from './IUserRepository';
+import { FindUserRepository, ICreateUserRepository, IUserRepository } from './IUserRepository';
 
 @injectable()
 export class UserRepository implements IUserRepository {
-  async create(data: CreateUserDto): Promise<IUser> {
+  async create(data: ICreateUserRepository): Promise<User> {
+    throw new Error('Endpoint not available');
+
     const userExists = await prisma.user.findFirst({
       where: {
         email: data.email,
@@ -20,11 +21,17 @@ export class UserRepository implements IUserRepository {
       data,
     });
 
-    return {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      isActive: user.isActive,
-    };
+    return user;
+  }
+
+  async findByEmail({ email }: FindUserRepository): Promise<User | null> {
+    const user = await prisma.user.findFirst({
+      where: {
+        email,
+        isActive: true,
+      },
+    });
+
+    return user;
   }
 }

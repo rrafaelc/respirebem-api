@@ -1,9 +1,3 @@
-export interface I_User {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  isActive: boolean;
-}
+import { User } from '@prisma/client';
 
-export type IUser = Omit<I_User, 'password'>;
+export type IUser = Omit<User, 'password'>;

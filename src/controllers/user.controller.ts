@@ -1,7 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { inject, injectable } from 'tsyringe';
-import { CreateUserDto } from '../dtos/createUser.dto';
-import type { IUserUseCase } from '../usecases/IUserUseCase';
+import { CreateUserDto } from '../dtos/user/createUser.dto';
+import { FindUserDto } from '../dtos/user/findUser.dto';
+import type { IUserUseCase } from '../usecases/user/IUserUseCase';
 
 @injectable()
 export class UserController {
@@ -13,6 +14,17 @@ export class UserController {
     try {
       const user = await this.userUseCase.create(body);
       reply.status(201).send({ user });
+    } catch (error: any) {
+      reply.status(400).send({ error: error.message });
+    }
+  }
+
+  async find(request: FastifyRequest, reply: FastifyReply) {
+    const params = request.params as FindUserDto;
+
+    try {
+      const user = await this.userUseCase.find(params);
+      reply.status(200).send({ user });
     } catch (error: any) {
       reply.status(400).send({ error: error.message });
     }
