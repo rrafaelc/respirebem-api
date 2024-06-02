@@ -12,6 +12,7 @@ export class UserController {
     const body = request.body as CreateUserDto;
 
     try {
+      throw new Error('Endpoint not available, maybe will be used in auth register');
       const user = await this.userUseCase.create(body);
       reply.status(201).send({ user });
     } catch (error: any) {

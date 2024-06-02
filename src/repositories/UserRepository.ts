@@ -7,8 +7,6 @@ import { FindUserRepository, ICreateUserRepository, IUserRepository } from './IU
 @injectable()
 export class UserRepository implements IUserRepository {
   async create(data: ICreateUserRepository): Promise<User> {
-    throw new Error('Endpoint not available');
-
     const userExists = await prisma.user.findFirst({
       where: {
         email: data.email,
