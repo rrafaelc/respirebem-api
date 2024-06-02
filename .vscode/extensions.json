@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "bradlc.vscode-tailwindcss",
+    "mikestead.dotenv",
+    "prisma.prisma",
+    "dsznajder.es7-react-js-snippets",
+    "mongodb.mongodb-vscode",
+    "mhutchie.git-graph",
+    "eamodio.gitlens",
+    "oderwat.indent-rainbow",
+    "pkief.material-icon-theme"
+  ]
+}
