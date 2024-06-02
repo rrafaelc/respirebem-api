@@ -3,4 +3,5 @@ export interface ISensor {
   name: string;
   model: string;
   isActive: boolean;
+  userId: string;
 }
