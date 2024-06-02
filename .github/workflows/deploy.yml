@@ -24,3 +24,4 @@ jobs:
         npm ci
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
+        pm2 restart RespireBemAPI
