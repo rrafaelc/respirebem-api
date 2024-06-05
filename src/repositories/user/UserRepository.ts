@@ -1,6 +1,7 @@
 import { injectable } from 'tsyringe';
 
 import { User } from '@prisma/client';
+import { FindUserByIdDto } from '../../dtos/user/findUserById.dto';
 import { prisma } from '../../lib/prisma';
 import { FindUserRepository, ICreateUserRepository, IUserRepository } from './IUserRepository';
 
@@ -27,6 +28,16 @@ export class UserRepository implements IUserRepository {
       where: {
         email,
         isActive: true,
+      },
+    });
+
+    return user;
+  }
+
+  async findById({ id }: FindUserByIdDto): Promise<User | null> {
+    const user = await prisma.user.findFirst({
+      where: {
+        id,
       },
     });
 
