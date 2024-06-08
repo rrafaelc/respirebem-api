@@ -5,6 +5,8 @@ export interface ISensorData {
   sensor_id: string;
   level: number;
   cep: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const sensorDataSchema = new Schema<ISensorData>(

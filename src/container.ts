@@ -10,6 +10,8 @@ import { AuthUseCase } from './usecases/auth/AuthUseCase';
 import { IAuthUseCase } from './usecases/auth/IAuthUseCase';
 import { ISensorUseCase } from './usecases/sensor/ISensorUseCase';
 import { SensorUseCase } from './usecases/sensor/SensorUseCase';
+import { ISensorDataUseCase } from './usecases/sensorData/ISensorDataUseCase';
+import { SensorDataUseCase } from './usecases/sensorData/SensorDataUseCase';
 import { IUserUseCase } from './usecases/user/IUserUseCase';
 import { UserUseCase } from './usecases/user/UserUseCase';
 
@@ -18,6 +20,7 @@ container.register<ISensorRepository>('ISensorRepository', SensorRepository);
 container.register<ISensorDataRepository>('ISensorDataRepository', SensorDataRepository);
 container.register<IUserUseCase>('IUserUseCase', UserUseCase);
 container.register<ISensorUseCase>('ISensorUseCase', SensorUseCase);
+container.register<ISensorDataUseCase>('ISensorDataUseCase', SensorDataUseCase);
 container.register<IAuthUseCase>('IAuthUseCase', AuthUseCase);
 
 export { container };
