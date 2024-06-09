@@ -1,11 +1,12 @@
 import { inject, injectable } from 'tsyringe';
 import { FindSensorDto } from '../../dtos/sensor/findSensor.dto';
 import { FindSensorById } from '../../dtos/sensor/findSensorById.dto';
+import { ISensor } from '../../interfaces/ISensor';
 import type { ISensorRepository } from '../../repositories/sensor/ISensorRepository';
 import type { ISensorDataRepository } from '../../repositories/sensorData/ISensorDataRepository';
 import type { IUserRepository } from '../../repositories/user/IUserRepository';
 import { isUUID } from '../../utils/isUUID';
-import { CreateSensorUseCaseDto, ISensorAllDatas, ISensorUseCase } from './ISensorUseCase';
+import { CreateSensorUseCaseDto, ISensorUseCase } from './ISensorUseCase';
 
 @injectable()
 export class SensorUseCase implements ISensorUseCase {
@@ -15,7 +16,7 @@ export class SensorUseCase implements ISensorUseCase {
     @inject('IUserRepository') private userRepository: IUserRepository,
   ) {}
 
-  async create({ userId, name, model }: CreateSensorUseCaseDto): Promise<ISensorAllDatas> {
+  async create({ userId, name, model }: CreateSensorUseCaseDto): Promise<ISensor> {
     if (!name || !model) throw new Error('name and model is required');
 
     const user = await this.userRepository.findById({ id: userId });
@@ -32,59 +33,32 @@ export class SensorUseCase implements ISensorUseCase {
       user,
     });
 
-    return { ...sensor, data: [] };
+    return sensor;
   }
 
-  async find(): Promise<ISensorAllDatas[]> {
+  async find(): Promise<ISensor[]> {
     const sensors = await this.sensorRepository.find();
 
-    const sensorAllData: ISensorAllDatas[] = await Promise.all(
-      sensors.map(async (sensor): Promise<ISensorAllDatas> => {
-        const sensorData = await this.sensorDataRepository.find({ sensor });
-
-        return {
-          ...sensor,
-          data: sensorData,
-        };
-      }),
-    );
-
-    return sensorAllData;
+    return sensors;
   }
 
-  async findByUser({ userId }: FindSensorDto): Promise<ISensorAllDatas[]> {
+  async findByUser({ userId }: FindSensorDto): Promise<ISensor[]> {
     const user = await this.userRepository.findById({ id: userId });
 
     if (!user) throw new Error('User not found');
 
     const sensors = await this.sensorRepository.findByUser(user);
 
-    const sensorAllData: ISensorAllDatas[] = await Promise.all(
-      sensors.map(async (sensor): Promise<ISensorAllDatas> => {
-        const sensorData = await this.sensorDataRepository.find({ sensor });
-
-        return {
-          ...sensor,
-          data: sensorData,
-        };
-      }),
-    );
-
-    return sensorAllData;
+    return sensors;
   }
 
-  async findById({ id }: FindSensorById): Promise<ISensorAllDatas> {
+  async findById({ id }: FindSensorById): Promise<ISensor> {
     if (!isUUID(id)) throw new Error('Id must be an UUID');
 
     const sensor = await this.sensorRepository.findById({ id });
 
     if (!sensor) throw new Error('Sensor not found');
 
-    const sensorData = await this.sensorDataRepository.find({ sensor });
-
-    return {
-      ...sensor,
-      data: sensorData,
-    };
+    return sensor;
   }
 }

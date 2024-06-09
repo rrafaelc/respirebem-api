@@ -10,7 +10,7 @@ export interface AppOptions extends FastifyServerOptions, Partial<AutoloadPlugin
 const options: AppOptions = {};
 
 const app: FastifyPluginAsync<AppOptions> = async (fastify, opts): Promise<void> => {
-  fastify.register(cors, {
+  void fastify.register(cors, {
     origin: true,
   });
 

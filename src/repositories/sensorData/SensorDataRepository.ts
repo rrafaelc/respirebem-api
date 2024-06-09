@@ -17,20 +17,23 @@ export class SensorDataRepository implements ISensorDataRepository {
     });
 
     try {
-      const savedSensorData = await newSensorData.save();
+      const data = await newSensorData.save();
 
-      return savedSensorData;
+      return data;
     } catch (error: any) {
       console.log({ error: error.message });
       throw new Error('Error creating sensor data');
     }
   }
 
-  async find({ sensor }: FindSensorDataDto): Promise<ISensorData[]> {
+  async find({ sensor_id, limit }: FindSensorDataDto): Promise<ISensorData[]> {
     await connectDB();
 
     try {
-      const data: ISensorData[] = await SensorData.find({ sensor_id: sensor.id });
+      const data: ISensorData[] = await SensorData.find({ sensor_id })
+        .sort({ createdAt: -1 })
+        .limit(limit)
+        .exec();
 
       return data;
     } catch (error: any) {
