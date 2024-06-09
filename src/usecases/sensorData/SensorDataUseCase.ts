@@ -1,4 +1,5 @@
 import { inject, injectable } from 'tsyringe';
+import { MOCK_CEPS, MOCK_IDS } from '../../constants/constants';
 import type { ISensorDataRepository } from '../../repositories/sensorData/ISensorDataRepository';
 import { CreateSensorDataRequest } from '../../requests/sensorData/createSensorDataRequest';
 import { FindSensorDataRequest } from '../../requests/sensorData/findSensorDataRequest';
@@ -26,33 +27,9 @@ export class SensorDataUseCase implements ISensorDataUseCase {
 
       await this.cepUseCase.findOrCreateByCep({ cep });
     } else {
-      const mockIds = [
-        'bbb1e3d0-a78f-4135-9995-98f2506fd844',
-        '731ff817-7abc-4c69-a02a-ba0f8548b6fb',
-        '666bf3cc-0772-42ba-baf0-f72e7cca85e9',
-      ];
-
-      const mockCeps = [
-        '13970-005',
-        '13970-010',
-        '13970-020',
-        '13970-030',
-        '13970-040',
-        '13970-050',
-        '13970-060',
-        '13970-065',
-        '13970-070',
-        '13970-080',
-        '13970-084',
-        '13970-125',
-        '13970-127',
-        '13970-130',
-        '13970-140',
-      ];
-
-      const randomId = mockIds[Math.floor(Math.random() * mockIds.length)];
+      const randomId = MOCK_IDS[Math.floor(Math.random() * MOCK_IDS.length)];
       const randomLevel = Math.floor(Math.random() * (900 - 100 + 1)) + 100;
-      const randomCep = mockCeps[Math.floor(Math.random() * mockCeps.length)];
+      const randomCep = MOCK_CEPS[Math.floor(Math.random() * MOCK_CEPS.length)];
 
       await this.sensorDataRepository.create({
         sensor_id: randomId,
