@@ -21,6 +21,8 @@ export class AuthUseCase implements IAuthUseCase {
 
       if (!match) throw new Error('Email or password is incorrect');
 
+      const expiresIn = '1d';
+
       const token = jwt.sign(
         {
           id: user.id,
@@ -29,9 +31,12 @@ export class AuthUseCase implements IAuthUseCase {
         } as IJwtPayload,
         process.env.JWT_SECRET ?? '',
         {
-          expiresIn: '1d',
+          expiresIn,
         },
       );
+
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 1);
 
       return {
         user: {
@@ -43,6 +48,7 @@ export class AuthUseCase implements IAuthUseCase {
           isActive: user.isActive,
         },
         access_token: token,
+        expires_at: expirationDate.toISOString(),
       };
     } catch (error: any) {
       throw new Error(error.message);
