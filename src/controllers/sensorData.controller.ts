@@ -39,10 +39,10 @@ export class SensorDataController {
 
   async cron(request: FastifyRequest, reply: FastifyReply) {
     try {
-      const { start } = request.body as CronSensorDataRequest;
+      const { start, sensor_id } = request.body as CronSensorDataRequest;
 
       if (start) {
-        await this.sensorDataUseCase.startCron();
+        await this.sensorDataUseCase.startCron({ sensor_id });
 
         reply.code(200).send('Cron job started');
       } else {

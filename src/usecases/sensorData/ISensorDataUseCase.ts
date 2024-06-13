@@ -7,9 +7,13 @@ export interface IUseCaseSensorData extends ISensorData {
   location: ICep | null;
 }
 
+export interface StartCron {
+  sensor_id: string;
+}
+
 export interface ISensorDataUseCase {
   create(request: CreateSensorDataRequest): Promise<void>;
   find(request: FindSensorDataRequest): Promise<IUseCaseSensorData[]>;
-  startCron(): Promise<void>;
+  startCron(request: StartCron): Promise<void>;
   stopCron(): Promise<void>;
 }
